@@ -57,16 +57,16 @@
 
 								<!-- Dropdown list -->
 								<ul class="dropdown-menu">
-									<li><a class="dropdown-item @@Dashboard" href="{{ path('list_itemsA') }}">Dashboard</a></li>
+									<li><a class=Dashboard</li>
 									<li class="dropdown dropdown-submenu dropright">
 										<a class="dropdown-item dropdown-toggle" href="#!" id="dropdown0501" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mes Ventes</a>
 					
 										<ul class="dropdown-menu" aria-labelledby="dropdown0501">
-											<li><a class="dropdown-item" href="{{ path('list_itemsA') }}">Actives</a></li>
+											<li><a class=Actives</a></li>
 											<li><a class="dropdown-item" href="index.html">Expirées</a></li>
 										</ul>
 									</li>
-									<li><a class="dropdown-item @@AjouterPiece" href="{{ path('add_item') }}">Ajouter Une Pièce</a></li>	
+									<li><a class=Ajouter Une Pièce</li>	
 								</ul>
 							</li>
 							<li class="nav-item ">
@@ -75,7 +75,8 @@
 						</ul>
 						<ul class="navbar-nav ml-auto mt-10">
 							<li class="nav-item">
-								<a class="nav-link login-button" href="login.html">Déconnecter</a>
+							<a href="{{ path('app_logout') }}">Déconnexion</a>
+
 							</li>
 							<li class="nav-item">
 								<a class="nav-link text-white add-button" href="ad-listing.html"><i class="fa fa-plus-circle"></i> Reclamation</a>

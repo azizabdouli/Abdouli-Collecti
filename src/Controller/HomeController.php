@@ -26,4 +26,11 @@ class HomeController extends AbstractController
             
         ]);
     }
+    #[Route(path: '/', name: 'home')]
+    public function back(): Response
+    {
+        // ...
+
+        return $this->redirectToRoute('app_login');
+    }
 }

@@ -25,4 +25,11 @@ class FrontPartenaireController extends AbstractController
             'informations' => $informations,
         ]);
     }
+    #[Route(path: '/', name: 'home')]
+    public function back(): Response
+    {
+        // ...
+
+        return $this->redirectToRoute('app_login');
+    }
 }
