@@ -11,13 +11,27 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('nom')
+            ->add('prenom')
             ->add('email')
+            ->add('roles', ChoiceType::class, [
+                'choices' => [
+                    'Partenaire' => 'ROLE_USER',
+                    'Collecteur' => 'ROLE_ADMIN',
+                ],
+                'multiple' => true,
+            ])
+            
+            ->add('telephone')
+            ->add('datenaiss')
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
@@ -26,15 +40,16 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('isVerified', HiddenType::class, [
+                'data' => '0'
+            ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
+                    
                     new Length([
                         'min' => 6,
                         'minMessage' => 'Your password should be at least {{ limit }} characters',

@@ -4,6 +4,11 @@ namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 /**
  * Utilisateur
@@ -11,8 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="utilisateur", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQ_1D1C63B3E7927C74", columns={"email"})})
  * @ORM\Entity
  */
-class Utilisateur
-{
+class Utilisateur  implements UserInterface,PasswordAuthenticatedUserInterface{
     /**
      * @var int
      *
@@ -30,12 +34,11 @@ class Utilisateur
     private $email;
 
     /**
-     * @var array
+     * @var array    
      *
      * @ORM\Column(name="roles", type="json", nullable=false)
      */
-    private $roles;
-
+    private $roles = [];
     /**
      * @var string
      *
@@ -69,7 +72,7 @@ class Utilisateur
      *
      * @ORM\Column(name="dateNaiss", type="date", nullable=false, options={"default"="2000-01-01"})
      */
-    private $datenaiss = '2000-01-01';
+    private $datenaiss ;
 
     /**
      * @var int
@@ -117,6 +120,10 @@ class Utilisateur
         $this->password = $password;
 
         return $this;
+    }
+    public function getUsername(): ?string
+    {
+        return $this->email;
     }
 
     public function isIsVerified(): ?bool
@@ -178,6 +185,38 @@ class Utilisateur
 
         return $this;
     }
+    public function getSalt(): ?string
+    {
+        // you do not need to use a salt with modern password hashing
+        // see https://auth0.com/blog/adding-salt-to-hashing-a-better-way-to-store-passwords/
+        return null;
+    }
+
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+    public function getUserIdentifier(): ?string
+{
+    return $this->email;
+}
+    public function __toString(): string
+{
+    return sprintf("Email: %s\nRoles: %s\nPassword: %s\nVerified: %s\nNom: %s\nPrenom:  %s\nTelephone: %s\n",
+        $this->email,
+        implode(',', $this->roles),
+        $this->password,
+        $this->isVerified ? 'true' : 'false',
+        $this->nom,
+        $this->prenom,
+        
+        $this->telephone
+    );
+}
+
+   
+
 
 
 }
